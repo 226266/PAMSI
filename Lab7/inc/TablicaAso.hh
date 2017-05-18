@@ -11,6 +11,7 @@ using namespace std;
 class TablicaAso: public iTablicaAso,public iTestowany {
 public:
 	void dodaj(string klucz,int wartosc);
+	void wypelnij();
 	void wypisz_tablice();
 	void znajdz_klucz(string szukany_klucz); // szuka po kluczach
 	void znajdz_wartosc(int szukana_wartosc);// szuka po wartosciach

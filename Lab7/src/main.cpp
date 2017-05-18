@@ -16,11 +16,12 @@ int costam;
 int main(){
 	// TWORZE ZMIENNA DO POMIARU CZASU
 	Zegar Stoper;
-
-	TablicaAso Tab1(5);
+  int wielkosc_problemu;
+	cin >> wielkosc_problemu;
+	TablicaAso Tab1(wielkosc_problemu);
 
 	Stoper.CzasStart();
-	Tab1.wykonaj_test(5);
+	Tab1.wykonaj_test(wielkosc_problemu);
 	Stoper.CzasStop();
 	Stoper.IleTrwalo();
 

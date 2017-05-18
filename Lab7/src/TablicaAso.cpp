@@ -50,6 +50,7 @@ void TablicaAso::znajdz_klucz(string szukany_klucz){
 		Element* temp = tablica[i];
 		while (temp != NULL) {
 			if(temp->klucz_elementu == szukany_klucz){
+				cout << "ZNALEZIONO :"<<endl;
 				cout << "Klucz: " << temp->klucz_elementu << ", Wartosc: " << temp->wartosc_elementu << "\t";
 				temp = temp->nastepny;
 				}
@@ -65,6 +66,7 @@ void TablicaAso::znajdz_wartosc(int szukana_wartosc){
 		Element* temp = tablica[i];
 		while (temp != NULL) {
 			if(temp->wartosc_elementu == szukana_wartosc){
+				cout << "ZNALEZIONO :"<<endl;
 				cout << "Klucz: " << temp->klucz_elementu << ", Wartosc: " << temp->wartosc_elementu << "\t";
 				temp = temp->nastepny;
 				}
@@ -75,15 +77,20 @@ void TablicaAso::znajdz_wartosc(int szukana_wartosc){
 		}
 	}
 //////////////////////////////////////////////////////////////////
-void TablicaAso::wykonaj_test(int ilosc){
-	string slowo ;
-	int liczba, szukane;
-	for (int i = 0; i < ilosc; i++) {
-		cout << "podaj slowo [SPACJA] wartosc" << '\n';
-		cin>>slowo >> liczba;
-		dodaj(slowo, liczba);
+void TablicaAso::wypelnij(){
+	int liczba;
+	for (int i = 0; i < ROZMIAR; i++) {
+			string slowo="";
+			for (int j = 0; j < 4; j++) { // 4- dlugosc wyrazu (ilosc liter)
+				slowo += 65 + (rand() % 26);
+				}
+	 		liczba = (rand() % 9000) + 1000;
+			dodaj(slowo, liczba);
 	}
-	cout << "podaj szukane " << endl;
-	cin >> szukane;
-	znajdz_wartosc(szukane);
+}
+//////////////////////////////////////////////////////////////////////
+void TablicaAso::wykonaj_test(int ilosc){
+	string szukane = "AGML";
+	wypelnij();
+	znajdz_klucz(szukane);
 }
