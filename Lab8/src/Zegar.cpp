@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "Zegar.hh"
-using namespace std;	
+using namespace std;
 
 
 void Zegar::CzasStart(){
@@ -17,15 +17,15 @@ void Zegar::CzasStop(){
 }
 
 
-void Zegar::IleTrwalo(){
+double Zegar::IleTrwalo(){
 	czas_pomiaru=(koniec_pomiaru - poczatek_pomiaru)/(double)CLOCKS_PER_SEC;     //obliczenie roznicy, czyli Czasu wykonania
-	cout<<czas_pomiaru<<endl;		  						 //wyswietl czs wykonania	
+	cout<<czas_pomiaru<<endl;  						 //wyswietl czs wykonania
+	return czas_pomiaru;
 }
 
 void Zegar::ZmierzCzas(iTestowany &Obiekt,int ilosc){
 		CzasStart();
 		Obiekt.wykonaj_test(ilosc);
 		CzasStop();
-		IleTrwalo();	
+		IleTrwalo();
 }
-

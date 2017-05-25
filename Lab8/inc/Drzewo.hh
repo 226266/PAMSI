@@ -7,28 +7,30 @@
 
 using namespace std;
 
-class Drzewo: public iDrzewo,public iTestowany {
+struct Wezel{
+	Wezel * ojciec;
+	Wezel * lewy_syn;
+	Wezel * prawy_syn;
+	int wartosc_wezla;
+	char kolor;
+};
+
+
+// Definicja typu obiektowego Drzewo
+class Drzewo: public iDrzewo,public iTestowany{
 public:
-	void dodaj_korzen(int wartosc);
-	void dodaj_lisc_lewy(int wartosc);
-	void dodaj_lisc_prawy(int wartosc);
+	Drzewo(); // Konstruktor klasy
+	void rotacja_w_lewo(Wezel * A); // Rotacja w lewo względem A
+  void rotacja_w_prawo(Wezel * A); // Rotacja w prawo względem A
+  void dodaj_wezel(int k);   // Wstawia węzeł o kluczu k
 
-	// void usun_lisc ();
-	//void znajdz_lisc();
-
-
+	void szukaj(int k); // Wyszukuje węzeł o kluczu k
 	void wykonaj_test(int ilosc);
 
-	Drzewo(int pierwszy_lisc); // konstruktor
-
 private:
-	struct Lisc{
-		Lisc *lewy; // adres lewego syna
-		Lisc *prawy;// adres prawego syna
-		Lisc *rodzic;// adres rodzica
-		int wartosc_liscia;
-	};
-		Lisc *korzen = NULL; // pierwszy element drzewa
+	Wezel S;      // Węzeł strażnika
+	Wezel * root;        // Korzeń drzewa czerwono-czarnego
+
 };
 
 
