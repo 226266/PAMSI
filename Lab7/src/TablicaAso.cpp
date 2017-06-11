@@ -5,25 +5,31 @@
 
 using namespace std;
 /////////////////////////////////////////////////////////////////
-TablicaAso::TablicaAso(int rozmiar){
+TablicaAso::TablicaAso(int rozmiar ,int rodzaj_haszowania){
 	tablica = new Element* [rozmiar];
 	ROZMIAR = rozmiar;
+	rodzaj_haszu  = rodzaj_haszowania ;
 	for (int i = 0; i < rozmiar; i++) {
 		tablica[i] = NULL;
 		}
 	}
 ///////////////////////////////////////////////////////////////
-int TablicaAso::haszuj(string klucz){
-	const char *klucz_c;
-	int hash; // suma % modulo
-	int suma = 0; //suma wartosci ASCI liter wyrazu
-	int modulo = ROZMIAR;
-	klucz_c = klucz.c_str(); // zwraca  lancuch znakow
-	for (unsigned int i = 0; i < klucz.length(); i++) {
-		suma += klucz_c[i];
-		}
-	return hash = suma%modulo;
+int TablicaAso::haszuj(string klucz){ // jak = 1 - modulo / jak =2 mnozenie
+	int suma = 0;
+
+	for (int i = 0; i < klucz.length(); i++) { // suma znaków ASCI
+		suma += (int) klucz[i];
 	}
+
+	if (rodzaj_haszu == 1) { // haszowanie modulo
+		return suma % ROZMIAR;
+	}
+	else if (rodzaj_haszu == 2) { // haszowanie przez mnożenie
+		double A = (sqrt(5) - 1) / 2;
+
+		return (int) (ROZMIAR * fmod(suma * A, 1));
+	}
+}
 /////////////////////////////////////////////////////////////////
 void TablicaAso::dodaj(string klucz, int wartosc){
 	Element *nowy_element = new Element;
@@ -45,14 +51,14 @@ void TablicaAso::wypisz_tablice(){
 		}
 	}
 //////////////////////////////////////////////////////////////////
-void TablicaAso::znajdz_klucz(string szukany_klucz){
+int TablicaAso::znajdz_klucz(string szukany_klucz){
 	for (int i = 0; i < ROZMIAR; i++) {
 		Element* temp = tablica[i];
 		while (temp != NULL) {
 			if(temp->klucz_elementu == szukany_klucz){
-				cout << "ZNALEZIONO :"<<endl;
-				cout << "Klucz: " << temp->klucz_elementu << ", Wartosc: " << temp->wartosc_elementu << "\t";
-				temp = temp->nastepny;
+				//cout << "ZNALEZIONO :"<<endl;
+				//cout << "Klucz: " << temp->klucz_elementu << ", Wartosc: " << temp->wartosc_elementu << "\t";
+				return 0 ;
 				}
 			else{
 				temp = temp->nastepny;
@@ -76,10 +82,20 @@ void TablicaAso::znajdz_wartosc(int szukana_wartosc){
 			}
 		}
 	}
+//////////////////////////////////////////////////////////////////////
+void TablicaAso:: Dodaj_pierwszy(){
+	pierwszy_klucz="";
+	for (int j = 0; j < 4; j++) { // 4- dlugosc wyrazu (ilosc liter)
+		pierwszy_klucz += 65 + (rand() % 26);
+		}
+	int pierwszy_liczba;
+	pierwszy_liczba = (rand() % 9000) + 1000;
+	dodaj(pierwszy_klucz, pierwszy_liczba);
+}
 //////////////////////////////////////////////////////////////////
-void TablicaAso::wypelnij(){
+void TablicaAso::wypelnij(int ilosc_elementow){
 	int liczba;
-	for (int i = 0; i < ROZMIAR; i++) {
+	for (int i = 0; i < ilosc_elementow; i++) {
 			string slowo="";
 			for (int j = 0; j < 4; j++) { // 4- dlugosc wyrazu (ilosc liter)
 				slowo += 65 + (rand() % 26);
@@ -90,7 +106,6 @@ void TablicaAso::wypelnij(){
 }
 //////////////////////////////////////////////////////////////////////
 void TablicaAso::wykonaj_test(int ilosc){
-	string szukane = "AGML";
-	wypelnij();
-	znajdz_klucz(szukane);
+	znajdz_klucz(pierwszy_klucz);
+	delete tablica;
 }
